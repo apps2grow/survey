@@ -10,7 +10,7 @@
                 <field name="page_id" invisible="1" required="0"/>
                 <field name="conditional" attrs="{'readonly':[('survey_id', '=', False)]}"/>
                 <field name="question_conditional_id" domain="[('survey_id', '=', survey_id),('page_id', '!=', page_id)]" attrs="{'invisible':[('conditional','!=',True)]}"/>
-                <field name="answer_id" domain="[('question_id', '=', question_conditional_id)]" attrs="{'invisible':[('conditional','!=',True)]}"/>
+                <field name="answer_ids" domain="[('question_id', '=', question_conditional_id)]" attrs="{'invisible':[('conditional','!=',True)]}" widget="many2many_tags"/>
             </field>
         </field>
     </record>

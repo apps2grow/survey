@@ -25,9 +25,9 @@ class SurveyQuestion(models.Model):
         help="In order to edit this field you should"
              " first save the question"
     )
-    answer_id = fields.Many2one(
+    answer_ids = fields.Many2many(
         'survey.label',
-        'Answer',
+        string='Answers',
         copy=False,
     )
 
@@ -50,9 +50,12 @@ class SurveyQuestion(models.Model):
             input_answer_ids = self.env['survey.user_input_line'].search(
                 [('user_input_id.token', '=', post.get('token')),
                  ('question_id', '=', self.question_conditional_id.id)])
-            for answers in input_answer_ids:
-                value_suggested = answers.value_suggested
-                if self.conditional and self.answer_id != value_suggested:
-                    return {}
-                else:
-                    return checker(post, answer_tag)
+            conditional = False
+            for answer in input_answer_ids:
+                value_suggested = answer.value_suggested
+                if self.conditional and value_suggested in self.answer_ids:
+                    conditional = True
+            if conditional == False:
+                return {}
+            else:
+                return checker(post, answer_tag)

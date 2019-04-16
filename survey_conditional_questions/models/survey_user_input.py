@@ -19,7 +19,7 @@ class SurveyUserInput(models.Model):
                     lambda x: x == question.question_conditional_id):
                 input_answer_ids = user_input.user_input_line_ids.filtered(
                     lambda x: x.question_id == question2)
-                for answers in input_answer_ids.filtered(
-                        lambda x: x.value_suggested != question.answer_id):
+                if not input_answer_ids.filtered(
+                        lambda x: x.value_suggested in question.answer_ids):
                     questions_to_hide.append(question.id)
         return questions_to_hide
