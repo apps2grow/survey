@@ -4,7 +4,7 @@
 ##############################################################################
 
 import logging
-from odoo.addons.survey.controllers.main import WebsiteSurvey
+from odoo.addons.survey.controllers.main import Survey
 from odoo import http
 from odoo.http import request
 
@@ -12,7 +12,7 @@ from odoo.http import request
 _logger = logging.getLogger(__name__)
 
 
-class SurveyConditional(WebsiteSurvey):
+class SurveyConditional(Survey):
 
     # TODO deberiamos heredar esto correctamente
     @http.route()
